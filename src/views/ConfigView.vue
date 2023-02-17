@@ -1,53 +1,76 @@
 <script setup>
 import { useUserStore } from '../stores/user';
 import { onMounted } from 'vue';
-
+import { ref } from "vue";
 import { PostStore } from '../stores/db';
 
-
-const userStore = useUserStore();
 const store = PostStore()
 
 onMounted(() => {
   store.obtenerDato(); 
 })
 
+const nombre = ref(store.nombre1);
+const apellido = ref(store.apellido1);
+const cuit = ref(store.cuit1);
+const empresa = ref(store.empresa1);
+const telefono = ref(store.telefono1);
+const direccion = ref(store.direccion1);  
+
+const userStore = useUserStore();
+const update = () => {
+  store.updateItem(nombre.value, apellido.value, cuit.value, empresa.value, telefono.value, direccion.value);
+};
+
 const logout = () => {
   userStore.logout();
 };
-
 </script>
 
-
 <template>
-  <header class="head">
+  <header>
     <div class="config__var">
-      <button class="config__logout" @click.prevent="logout">Logout</button>    
-      <router-link class="config__config" to="/config">Config</router-link
-    >
+      <button class="config__logout" @click.prevent="logout">Logout</button>
+      <button class="config__config" @click.prevent="config">Config</button>
     </div> 
   </header>
   <div class="configuracion">
     <h2>Mis datos</h2>
-       
+    <form @submit.prevent="update">
+      <div class="config__input">
+        <input type="text" required v-model="nombre"/>
+        <label>Nombre</label>
+      </div>
+      <div class="config__input">
+        <input type="text" required v-model="apellido" />
+        <label>Apellido</label>
+      </div>
+      <div class="config__input">
+        <input type="text" required v-model="cuit" />
+        <label>Cuit</label>
+      </div>
+      <div class="config__input">
+        <input type="text" required v-model="empresa" />
+        <label>Empresa</label>
+      </div>
+      <div class="config__input">
+        <input type="text" required v-model="telefono" />
+        <label>Telefono</label>
+      </div>
+      <div class="config__input">
+        <input type="text" required v-model="direccion" />
+        <label>Direccion</label>
+      </div>
+      <div class="config__btn">
+        <button class="config__submit" type="submit">Guardar</button>
+      </div>                        
+    </form>
+                        
   </div>
 </template>
 
 <style scoped>
-.head {
-  width: auto;
-  height: 200px;
-  margin-bottom: 0px;
-  background-image: url(../assets/focos.jpg);
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
-  color: #fff;
-  text-align: center;
-  clip-path: polygon(100% 0, 100% 100%, 50% 100%, 0 100%, 0 0);
-  margin-bottom: 50px;
-}
+
 .configuracion {
   margin: 100px auto;
   width: 400px;
@@ -120,28 +143,21 @@ const logout = () => {
 
 .config__logout {
   color: #1b1c1b;
-  padding: 0.7em 1.2em;
+  padding: 0.7em 1.7em;
   font-size: 18px;
   border-radius: 0.5em;
   background: #e8e8e8;
   border: none;
   cursor: pointer;
-  margin-right: 10px;
-  margin-top: 10px;
 }
 
 .config__config {
   color: #1b1c1b;
-  padding: 0.7em 1.2em;
+  padding: 0.7em 1.7em;
   font-size: 18px;
   border-radius: 0.5em;
   background: #e8e8e8;
   border: none;
   cursor: pointer;
-  margin-right: 10px;
-  margin-top: 10px;
-  outline: none;
-  text-decoration: none;
 }
-
 </style>

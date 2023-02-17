@@ -5,7 +5,7 @@ import { RouterLink } from "vue-router";
 <template>
   <header>
     <div class="texts">
-      <h1 class="texts__title">Basic authentication with VueJS and Firebase</h1>
+      <h1 class="texts__title">Electricidad domiciliaria</h1>
     </div>
   </header>
   <section class="buttons">
@@ -23,22 +23,21 @@ import { RouterLink } from "vue-router";
 header {
   width: 100%;
   height: 750px;
-  background-image: url(../assets/hero.jpg);
+  background-image: url(../assets/foco-sobrio.jpg);
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
   overflow: hidden;
   color: #fff;
   text-align: center;
-  clip-path: polygon(100% 0, 100% 70%, 50% 100%, 0 70%, 0 0);
+  clip-path: polygon(100% 0, 100% 90%, 50% 100%, 0 90%, 0 0);
   margin-bottom: 50px;
 }
 
 .texts {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding-right: 600px;
+  padding-top: 80px;
+  margin: 200px;
 }
 
 .texts__title {

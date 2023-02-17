@@ -1,22 +1,53 @@
+<script setup>
+import { ref } from "vue";
+import { useUserStore } from "../stores/user";
+
+const email = ref("");
+const password = ref("");
+
+const userStore = useUserStore();
+const login = () => {
+  userStore.login(email.value, password.value);
+};
+</script>
+
 <template>
-  <div class="login">
+  <header class="head">
+    <div class="login">
     <h2>Login</h2>
-    <form>
+    <form @submit.prevent="login">
       <div class="login__input">
-        <input type="text" required />
+        <input type="text" required v-model="email" />
         <label>Username</label>
       </div>
       <div class="login__input">
-        <input type="password" required />
+        <input type="password" required v-model="password" />
         <label>Password</label>
       </div>
 
       <button class="login__submit" type="submit">Login</button>
     </form>
   </div>
+  </header>
+  
 </template>
 
 <style>
+.head {
+  width: auto;
+  height: 750px;
+  margin-bottom: 0px;
+  background-image: url(../assets/focos.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  clip-path: polygon(100% 0, 100% 90%, 50% 100%, 0 90%, 0 0);
+  margin-bottom: 50px;
+}
+
 .login {
   margin: 100px auto;
   width: 400px;

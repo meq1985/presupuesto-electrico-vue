@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import { auth } from "../firebase";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,11 +20,31 @@ const router = createRouter({
       component: () => import("../views/RegisterView.vue"),
     },
     {
+      path: "/config",
+      name: "config",
+      component: () => import("../views/ConfigView.vue"),
+    },
+    {
       path: "/dashboard",
       name: "dashboard",
       component: () => import("../views/DashboardView.vue"),
+      meta: {
+        auth: true,
+      }
     },
   ],
+});
+
+//navegation guards
+router.beforeEach((to, from, next) => {
+  if(to.path === "/login" && auth.currentUser){
+    next("/dashboard")
+  } else if(to.matched.some((record) => record.meta.auth) && !auth.currentUser)
+  {
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;

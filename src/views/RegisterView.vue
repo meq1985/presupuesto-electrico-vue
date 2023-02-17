@@ -1,22 +1,66 @@
+<script setup>
+import { ref } from "vue";
+import { useUserStore } from "../stores/user";
+import { getAuth } from "firebase/auth";
+import { PostStore } from '../stores/db';
+
+const store = PostStore()
+const email = ref("");
+const password = ref("");
+const userStore = useUserStore();
+const register = () => {
+  userStore.register(email.value, password.value);
+  store.addItem(email.value)
+};
+
+
+const auth = getAuth();
+const user = auth.currentUser;
+
+/*if (user !== null) {
+  const email = user.email;
+  const id = user.uid;
+  addDoc(collection(db,"usuarios",id),{email})
+}*/
+
+</script>
+
 <template>
-  <div class="register">
+  <header class="head">
+    <div class="register">
     <h2>Register</h2>
-    <form>
+    <form @submit.prevent="register">
       <div class="register__input">
-        <input type="email" required />
+        <input type="email" required v-model="email" />
         <label>Email</label>
       </div>
       <div class="register__input">
-        <input type="password" required />
+        <input type="password" required v-model="password" />
         <label>Password</label>
       </div>
 
       <button class="register__submit" type="submit">Register</button>
     </form>
   </div>
+  </header>
 </template>
 
 <style>
+.head {
+  width: auto;
+  height: 750px;
+  margin-bottom: 0px;
+  background-image: url(../assets/focos.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  clip-path: polygon(100% 0, 100% 90%, 50% 100%, 0 90%, 0 0);
+  margin-bottom: 50px;
+}
+
 .register {
   margin: 100px auto;
   width: 400px;
