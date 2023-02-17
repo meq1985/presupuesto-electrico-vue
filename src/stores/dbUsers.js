@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 import { collection, query, where, doc, getDocs, setDoc, updateDoc, getDoc  } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
-import { useUserStore } from '../stores/user';
+import { useUserStore } from './user';
 
 export const PostStore = defineStore({
     id: 'main',

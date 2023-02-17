@@ -2,7 +2,7 @@
 import { useUserStore } from '../stores/user';
 import { onMounted } from 'vue';
 import { ref } from "vue";
-import { PostStore } from '../stores/db';
+import { PostStore } from '../stores/dbUsers';
 
 const store = PostStore()
 
@@ -28,13 +28,15 @@ const logout = () => {
 </script>
 
 <template>
-  <header>
+  <header class="head">
     <div class="config__var">
       <button class="config__logout" @click.prevent="logout">Logout</button>
-      <button class="config__config" @click.prevent="config">Config</button>
+      <router-link class="config__config" to="/dashboard">Dash</router-link
+    >
     </div> 
   </header>
-  <div class="configuracion">
+  <div class="estructura">
+    <div class="configuracion">
     <h2>Mis datos</h2>
     <form @submit.prevent="update">
       <div class="config__input">
@@ -65,20 +67,51 @@ const logout = () => {
         <button class="config__submit" type="submit">Guardar</button>
       </div>                        
     </form>
-                        
+                  
   </div>
+  <div class="configuracion">
+    <h2>Costos</h2>
+    <form class="config__input">
+      <div>
+        <input>
+        <label>Precios</label>
+      </div>
+    </form>
+  </div>
+  </div>
+
 </template>
 
 <style scoped>
-
+.head {
+  width: auto;
+  height: 200px;
+  margin-bottom: 0px;
+  background-image: url(../assets/focos.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+  clip-path: polygon(100% 0, 100% 100%, 50% 100%, 0 100%, 0 0);
+  margin-bottom: 10px;
+}
+.estructura{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 .configuracion {
-  margin: 100px auto;
+  margin:auto;
+  
   width: 400px;
   padding: 40px;
   background: #282828;
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
+
+  
 }
 
 .configuracion h2 {
@@ -149,6 +182,8 @@ const logout = () => {
   background: #e8e8e8;
   border: none;
   cursor: pointer;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .config__config {
@@ -159,5 +194,9 @@ const logout = () => {
   background: #e8e8e8;
   border: none;
   cursor: pointer;
+  margin-right: 10px;
+  margin-top: 10px;
+  outline: none;
+  text-decoration: none;
 }
 </style>

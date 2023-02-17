@@ -2,7 +2,7 @@
 import { useUserStore } from '../stores/user';
 import { onMounted } from 'vue';
 
-import { PostStore } from '../stores/db';
+import { PostStore } from '../stores/dbUsers';
 
 
 const userStore = useUserStore();
@@ -28,7 +28,7 @@ const logout = () => {
     </div> 
   </header>
   <div class="configuracion">
-    <h2>Mis datos</h2>
+    <h2>Dash</h2>
        
   </div>
 </template>
@@ -46,7 +46,7 @@ const logout = () => {
   color: #fff;
   text-align: center;
   clip-path: polygon(100% 0, 100% 100%, 50% 100%, 0 100%, 0 0);
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 .configuracion {
   margin: 100px auto;
