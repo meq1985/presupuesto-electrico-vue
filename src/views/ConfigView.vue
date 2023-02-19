@@ -3,11 +3,14 @@ import { useUserStore } from '../stores/user';
 import { onMounted } from 'vue';
 import { ref } from "vue";
 import { PostStore } from '../stores/dbUsers';
+import { costoStore } from "../stores/dbCostos";
 
-const store = PostStore()
+const store = PostStore();
+const costosStore = costoStore();
 
 onMounted(() => {
-  store.obtenerDato(); 
+  store.obtenerDato();
+  costosStore.obtenerCostos(); 
 })
 
 const nombre = ref(store.nombre1);
@@ -15,11 +18,36 @@ const apellido = ref(store.apellido1);
 const cuit = ref(store.cuit1);
 const empresa = ref(store.empresa1);
 const telefono = ref(store.telefono1);
-const direccion = ref(store.direccion1);  
+const direccion = ref(store.direccion1);
+
+const canalizacionLosa = ref(costosStore.canalizacionLosa);
+const canalizacionMamposteria = ref(costosStore.canalizacionMamposteria);
+const canalizacionConstruccionSeca = ref(costosStore.canalizacionConstruccionSeca);
+const cableadoObraNueva = ref(costosStore.cableadoObraNueva);
+const cableadoRecableado = ref(costosStore.cableadoRecableado);
+const conexionSimple = ref(costosStore.conexionSimple);
+const conexionDoble = ref(costosStore.conexionDoble);
+const conexionCombinacion = ref(costosStore.conexionCombinacion);
+const tableroPrincipal = ref(costosStore.tableroPrincipal);
+const tableroSeccional8 = ref(costosStore.tableroSeccional8);
+const tableroSeccional36 = ref(costosStore.tableroSeccional36);
+const tableroSeccional54 = ref(costosStore.tableroSeccional54);
+const acometidaGabinete = ref(costosStore.acometidaGabinete);
+const acometidaPat = ref(costosStore.acometidaPat);
+const acometidaPilar = ref(costosStore.acometidaPilar);
+const documentacionProyecto = ref(costosStore.documentacionProyecto);
+const documentacionPlano = ref(costosStore.documentacionPlano);
+const documentacionLista = ref(costosStore.documentacionLista); 
 
 const userStore = useUserStore();
 const update = () => {
   store.updateItem(nombre.value, apellido.value, cuit.value, empresa.value, telefono.value, direccion.value);
+};
+
+const updateC = () => {
+  costosStore.updateCostos(canalizacionLosa.value, canalizacionMamposteria.value, canalizacionConstruccionSeca.value, cableadoObraNueva.value, cableadoRecableado.value, 
+            conexionSimple.value, conexionDoble.value, conexionCombinacion.value,tableroPrincipal.value,tableroSeccional8.value,tableroSeccional36.value,tableroSeccional54.value,
+            acometidaGabinete.value, acometidaPat.value, acometidaPilar.value, documentacionProyecto.value, documentacionPlano.value, documentacionLista.value);
 };
 
 const logout = () => {
@@ -69,13 +97,128 @@ const logout = () => {
     </form>
                   
   </div>
-  <div class="configuracion">
+  <div class="configuracion__costos">
     <h2>Costos</h2>
-    <form class="config__input">
-      <div>
-        <input>
-        <label>Precios</label>
+    <form @submit.prevent="updateC">
+      <div class="config__costos">
+        <div class="config__costos__">
+        <div>
+          <label>Canalizacion</label>
+        </div>
+        <div>
+          <div class="config__input">
+            <input type="number" v-model="canalizacionLosa">
+            <label>En losa</label>
+          </div>
+         <div class="config__input">
+            <input type="number" v-model="canalizacionMamposteria">
+            <label>En manposteria</label>
+         </div>
+         <div class="config__input">
+          <input type="number" v-model="canalizacionConstruccionSeca">
+          <label>En construccion seca</label>
+         </div>  
+        </div>
       </div>
+      <div class="config__costos__">
+        <div>
+          <label>Cableado</label>
+        </div>
+        <div>
+          <div class="config__input">
+            <input type="number" v-model="cableadoObraNueva">
+            <label>Obra Nueva</label>
+          </div>
+         <div class="config__input">
+            <input type="number" v-model="cableadoRecableado">
+            <label>Recableado</label>
+         </div>
+        </div>
+      </div>
+      <div class="config__costos__">
+        <div>
+          <label>Conexion</label>
+        </div>
+        <div>
+          <div class="config__input">
+            <input type="number" v-model="conexionSimple">
+            <label>Punto,Toma Simple</label>
+          </div>
+         <div class="config__input">
+            <input type="number" v-model="conexionDoble">
+            <label>Toma Doble</label>
+         </div>
+         <div class="config__input">
+          <input type="number" v-model="conexionCombinacion">
+          <label>Punto Combinacion</label>
+         </div>  
+        </div>
+      </div>
+      <div class="config__costos__">
+        <div>
+          <label>Tablero</label>
+        </div>
+        <div>
+          <div class="config__input">
+            <input type="number" v-model="tableroPrincipal">
+            <label>Principal</label>
+          </div>
+         <div class="config__input">
+            <input type="number" v-model="tableroSeccional8">
+            <label>Seccional 8 polos</label>
+         </div>
+         <div class="config__input">
+          <input type="number" v-model="tableroSeccional36">
+          <label>Seccional 8/36 polos</label>
+         </div> 
+         <div class="config__input">
+          <input type="number" v-model="tableroSeccional54">
+          <label>Seccional +36 polos</label>
+         </div>  
+        </div>
+      </div>
+      <div class="config__costos__">
+        <div>
+          <label>Acometida</label>
+        </div>
+        <div>
+          <div class="config__input">
+            <input type="number" v-model="acometidaGabinete">
+            <label>Gabinete</label>
+          </div>
+         <div class="config__input">
+            <input type="number" v-model="acometidaPat">
+            <label>PAT de servicio</label>
+         </div>
+         <div class="config__input">
+          <input type="number" v-model="acometidaPilar">
+          <label>Pilar completo</label>
+         </div>  
+        </div>
+      </div>
+      <div class="config__costos__">
+        <div>
+          <label>Documentacion</label>
+        </div>
+        <div>
+          <div class="config__input">
+            <input type="number" v-model="documentacionProyecto">
+            <label>Proyecto elect x m2</label>
+          </div>
+         <div class="config__input">
+            <input type="number" v-model="documentacionPlano">
+            <label>Plano electrico x m2</label>
+         </div>
+         <div class="config__input">
+          <input type="number" v-model="documentacionLista">
+          <label>Lista de materiales</label>
+         </div>  
+        </div>
+      </div>
+      </div>
+      <div class="config__btn">
+        <button class="config__submit" type="submit">Guardar</button>
+      </div>   
     </form>
   </div>
   </div>
@@ -99,7 +242,7 @@ const logout = () => {
 }
 .estructura{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 2fr;
 }
 .configuracion {
   margin:auto;
@@ -114,17 +257,18 @@ const logout = () => {
   
 }
 
-.configuracion h2 {
+h2 {
   margin-bottom: 30px;
   color: #fff;
   text-align: center;
 }
 
-.configuracion .config__input {
+.config__input {
   position: relative;
 }
 
-.configuracion .config__input input {
+
+.config__input input {
   font-size: 18px;
   width: 100%;
   padding: 10px 0;
@@ -135,7 +279,7 @@ const logout = () => {
   outline: none;
   background: transparent;
 }
-.configuracion .config__input label {
+.config__input label {
   position: absolute;
   top: 0;
   left: 0;
@@ -145,13 +289,14 @@ const logout = () => {
   transition: 0.5s;
 }
 
-.configuracion .config__input input:focus ~ label,
-.configuracion .config__input input:valid ~ label {
+.config__input input:focus ~ label,
+.config__input input:valid ~ label {
   top: -20px;
   left: 0;
   color: #03e9f4;
   font-size: 12px;
 }
+
 
 .config__btn {
   display:flex;
@@ -199,4 +344,84 @@ const logout = () => {
   outline: none;
   text-decoration: none;
 }
+.configuracion__costos {
+  margin:auto;
+  width: 1000px;
+  padding: 40px;
+  background: #282828;
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+ 
+}
+.config__costos {
+  position: relative;
+  width:auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+.config__costos input {
+  font-size: 18px;
+  width: 100%;
+  padding: 10px 0;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+.config__costos label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
+}
+.config__costos input:focus ~ label,
+.config__costos input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+.config__costos__ {
+  position: relative;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  
+  
+}
+.config__costos__ input {
+  font-size: 18px;
+  width: 100%;
+  padding: 10px 0;
+  color: #fff;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+.config__costos__ label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
+}
+.config__costos__ input:focus ~ label,
+.config__costos__ input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #03e9f4;
+  font-size: 12px;
+}
+
+
 </style>

@@ -2,27 +2,22 @@
 import { ref } from "vue";
 import { useUserStore } from "../stores/user";
 import { getAuth } from "firebase/auth";
-import { PostStore } from '../stores/db';
+import { PostStore } from '../stores/dbUsers';
+import { costoStore } from "../stores/dbCostos";
 
-const store = PostStore()
+const store = PostStore();
+const costosStore = costoStore();
 const email = ref("");
 const password = ref("");
 const userStore = useUserStore();
 const register = () => {
   userStore.register(email.value, password.value);
-  store.addItem(email.value)
+  store.addItem(email.value);
+  costosStore.addCostos(email.value)
 };
-
 
 const auth = getAuth();
 const user = auth.currentUser;
-
-/*if (user !== null) {
-  const email = user.email;
-  const id = user.uid;
-  addDoc(collection(db,"usuarios",id),{email})
-}*/
-
 </script>
 
 <template>

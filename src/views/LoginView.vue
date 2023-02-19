@@ -4,8 +4,8 @@ import { useUserStore } from "../stores/user";
 
 const email = ref("");
 const password = ref("");
-
 const userStore = useUserStore();
+
 const login = () => {
   userStore.login(email.value, password.value);
 };

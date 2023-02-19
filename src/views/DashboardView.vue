@@ -1,21 +1,21 @@
 <script setup>
 import { useUserStore } from '../stores/user';
 import { onMounted } from 'vue';
-
 import { PostStore } from '../stores/dbUsers';
-
+import { costoStore } from "../stores/dbCostos";
 
 const userStore = useUserStore();
-const store = PostStore()
+const store = PostStore();
+const costosStore = costoStore();
 
 onMounted(() => {
-  store.obtenerDato(); 
+  store.obtenerDato();
+  costosStore.obtenerCostos();
 })
 
 const logout = () => {
   userStore.logout();
 };
-
 </script>
 
 
